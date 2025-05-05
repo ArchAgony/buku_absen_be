@@ -7,6 +7,24 @@ use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
+    public function Login(Request $request){
+        try {
+            $request->validate([
+                'username' => 'required',
+                'password' => 'required'
+            ]);
+            $data = Authentication::where('username', $request->username)->first();
+            $token = $data->createToken('auth_token')->plainTextToken;
+            return response()->json([
+                'message' => 'berhasil login',
+                'token' => $token
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
     /**
      * Display a listing of the resource.
      */
