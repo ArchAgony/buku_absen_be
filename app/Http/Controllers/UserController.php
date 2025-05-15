@@ -23,11 +23,11 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'berhasil login',
                 'token' => $token
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -41,11 +41,11 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'berhasil membuat user',
                 'data' => $data
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 
@@ -55,11 +55,11 @@ class UserController extends Controller
             $user->CurrentAccessTokens()->delete();
             return response()->json([
                 'message' => 'berhasil logout'
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 }

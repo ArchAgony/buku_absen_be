@@ -29,6 +29,20 @@ class KeperluanController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $field = $request->validate([
+                'tujuan' => 'required|unique:keperluans,tujuan'
+            ]);
+            $data = keperluan::create($field);
+            return response()->json([
+                'message' => 'berhasil membuat tujuan',
+                'data' => $data
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -53,6 +67,11 @@ class KeperluanController extends Controller
     public function update(Request $request, keperluan $keperluan)
     {
         //
+        try {
+            
+        } catch (\Exception $e) {
+
+        }
     }
 
     /**
