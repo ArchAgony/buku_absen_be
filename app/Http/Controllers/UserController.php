@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -13,13 +14,13 @@ class UserController extends Controller
                 'username' => 'required|exists:users,username',
                 'password' => 'required'
             ]);
-            $data = User::where('password', $request->password)->first();
-            if (!$data) {
+            $user = User::where('username', $request->username)->first();
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->json([
                     'message' => 'password salah'
                 ]);
             }
-            $token = $data->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'message' => 'berhasil login',
                 'token' => $token
@@ -34,7 +35,7 @@ class UserController extends Controller
     public function register(Request $request){
         try {
             $field = $request->validate([
-                'username' => 'required|exists:users,username',
+                'username' => 'required',
                 'password' => 'required'
             ]);
             $data = User::create($field);
@@ -52,7 +53,7 @@ class UserController extends Controller
     public function logout(Request $request){
         try {
             $user = $request->user();
-            $user->CurrentAccessTokens()->delete();
+            $user->CurrentAccessToken()->delete();
             return response()->json([
                 'message' => 'berhasil logout'
             ], 200);
