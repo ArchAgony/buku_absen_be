@@ -37,7 +37,7 @@ class TamuController extends Controller
                 'alamat' => 'required|string',
                 'no_hp' => 'required',
                 'ttd' => 'required|string',
-                'keperluan' => 'required|exists:keperluans,id'
+                'keperluan_id' => 'required|exists:keperluans,id'
             ]);
 
             $signatureData = $request->ttd;
@@ -55,7 +55,7 @@ class TamuController extends Controller
                 'alamat' => $request->alamat,
                 'no_hp' => $request->no_hp,
                 'ttd' => 'tanda_tangan/'.$imageName,
-                'keperluan' => $request->keperluan
+                'keperluan_id' => $request->keperluan_id
             ]);
 
             return response()->json([
