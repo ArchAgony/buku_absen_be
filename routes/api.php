@@ -14,7 +14,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::apiResource('/keperluan', KeperluanController::class);
+Route::apiResource('/keperluan', KeperluanController::class)->middleware('auth:sanctum');
 // Route::put('/keperluan/{id}', [KeperluanController::class, 'update']);
 
 Route::apiResource('/tamu', TamuController::class);

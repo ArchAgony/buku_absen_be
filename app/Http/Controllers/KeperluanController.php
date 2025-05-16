@@ -77,13 +77,8 @@ class KeperluanController extends Controller
     {
         //
         try {
-            if (!$keperluan) {
-                return response()->json([
-                    'message' => 'data not found'
-                ]);
-            }
             $field = $request->validate([
-                'tujuan' => 'required'
+                'tujuan' => 'required|unique:keperluans,tujuan'
             ]);
             $keperluan->update($field);
             return response()->json([

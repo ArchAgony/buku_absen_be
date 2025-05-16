@@ -15,6 +15,16 @@ class TamuController extends Controller
     public function index()
     {
         //
+        try {
+            $data = Tamu::all();
+            return response()->json([
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

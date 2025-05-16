@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_tamu');
             $table->date('tanggal_datang');
             $table->string('alamat');
-            $table->integer('no_hp');
+            $table->string('no_hp');
             $table->string('ttd');
             $table->unsignedBigInteger('keperluan_id');
             $table->foreign('keperluan_id')->references('id')->on('keperluans')->onUpdate("cascade")->onDelete("cascade");
