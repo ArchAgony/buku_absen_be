@@ -12,9 +12,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::apiResource('/keperluan', KeperluanController::class);
-// Route::put('/keperluan/{id}', [KeperluanController::class, 'update']);
+Route::middleware('auth:sanctum')->group(function() {
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::apiResource('/keperluan', KeperluanController::class);
+    Route::post('/keperluan/{keperluan}', [KeperluanController::class, 'updateData']);
+});
 
 Route::apiResource('/tamu', TamuController::class);

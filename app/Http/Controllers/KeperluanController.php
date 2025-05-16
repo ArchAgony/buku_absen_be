@@ -75,15 +75,17 @@ class KeperluanController extends Controller
      */
     public function update(Request $request, keperluan $keperluan)
     {
-        //
         try {
             $field = $request->validate([
-                'tujuan' => 'required|unique:keperluans,tujuan'
+                'tujuan' => 'required|unique:keperluans,tujuan,' . $keperluan->id
             ]);
+
+            // Update data
             $keperluan->update($field);
+
             return response()->json([
                 'message' => 'berhasil mengubah data'
-            ], 200);
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -91,11 +93,13 @@ class KeperluanController extends Controller
         }
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(keperluan $keperluan)
     {
+        dd($keperluan);
         try {
             $keperluan->delete();
             return response()->json([
@@ -105,6 +109,23 @@ class KeperluanController extends Controller
             return response()->json([
                 'message' => $e->getMessage()
             ], 400);
+        }
+    }
+
+    public function updateData(Request $request, keperluan $keperluan)
+    {
+        try {
+            $field = $request->validate([
+                'tujuan' => 'required|unique:keperluans,tujuan,' . $keperluan->id
+            ]);
+            $keperluan->update($field);
+            return response()->json([
+                'message' => 'berhasil mengubah data'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 422);
         }
     }
 }

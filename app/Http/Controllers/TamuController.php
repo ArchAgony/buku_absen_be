@@ -17,14 +17,14 @@ class TamuController extends Controller
     {
         //
         try {
-            $data = Tamu::all();
+            $data = Tamu::with('keperluan')->get();
             return response()->json([
                 'data' => $data
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
-            ]);
+            ], 400);
         }
     }
 
