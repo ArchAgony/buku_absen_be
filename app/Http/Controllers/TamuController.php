@@ -6,6 +6,7 @@ use App\Models\Tamu;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TamuController extends Controller
 {
@@ -52,10 +53,11 @@ class TamuController extends Controller
 
             $signatureData = $request->ttd;
             $nama = $request->nama_tamu;
+            $slug = Str::slug($nama);
 
             $image = str_replace('data:image/png;base64,', '', $signatureData);
             $image = str_replace(' ', '+', $image);
-            $imageName = 'ttd_'.$nama.'.png';
+            $imageName = 'ttd_'.$slug.'.png';
 
             Storage::disk('public')->put('tanda_tangan/'.$imageName, base64_decode($image));
 

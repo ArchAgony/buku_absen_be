@@ -23,6 +23,7 @@ class UserController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'message' => 'berhasil login',
+                'username' => $request->username,
                 'token' => $token
             ], 200);
         } catch (\Exception $e) {
