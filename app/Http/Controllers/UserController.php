@@ -35,7 +35,7 @@ class UserController extends Controller
     public function register(Request $request){
         try {
             $field = $request->validate([
-                'username' => 'required',
+                'username' => 'required|unique:users,username',
                 'password' => 'required'
             ]);
             $data = User::create($field);

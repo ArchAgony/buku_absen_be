@@ -12,5 +12,10 @@ class keperluan extends Model
     //
     use HasFactory, Notifiable, HasApiTokens;
 
+    protected $timestamp = false;
     protected $guarded = ['id'];
+
+    public function tamu() {
+        return $this->hasMany(Tamu::class);
+    }
 }

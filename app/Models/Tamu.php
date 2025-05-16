@@ -13,4 +13,8 @@ class Tamu extends Model
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $guarded = ['id'];
+
+    public function keperluan() {
+        return $this->belongsTo(keperluan::class);
+    }
 }

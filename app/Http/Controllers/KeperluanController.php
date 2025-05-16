@@ -12,7 +12,16 @@ class KeperluanController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $data = keperluan::all();
+            return response()->json([
+                'data' => $data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 
     /**
@@ -68,9 +77,22 @@ class KeperluanController extends Controller
     {
         //
         try {
-            
+            if (!$keperluan) {
+                return response()->json([
+                    'message' => 'data not found'
+                ]);
+            }
+            $field = $request->validate([
+                'tujuan' => 'required'
+            ]);
+            $keperluan->update($field);
+            return response()->json([
+                'message' => 'berhasil mengubah data'
+            ], 200);
         } catch (\Exception $e) {
-
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
         }
     }
 
@@ -79,6 +101,15 @@ class KeperluanController extends Controller
      */
     public function destroy(keperluan $keperluan)
     {
-        //
+        try {
+            $keperluan->delete();
+            return response()->json([
+                'message' => 'berhasil menghapus data'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }
